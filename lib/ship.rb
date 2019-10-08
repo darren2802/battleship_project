@@ -9,7 +9,7 @@ class Ship
     @length = length
     @health = length
   end
-
+#returns a value for some reason
   def hit
     @health -= 1
   end
