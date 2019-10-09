@@ -1,5 +1,3 @@
-require_relative '../lib/ship'
-
 class Cell
 
   attr_reader :coordinate, :ship
