@@ -8,6 +8,7 @@ class Cell
     @coordinate = coordinate
     @ship = nil
     @cell_has_been_fired_upon = false
+    @cell_symbol = "."
   end
 
   def empty?
@@ -24,11 +25,27 @@ class Cell
 
   def fire_upon
     @cell_has_been_fired_upon = true
-    @ship.hit
+    if @ship && @ship.sunk? == false
+      @ship.hit
+      @cell_symbol = "H"
+    elsif @ship && @ship.sunk? == true #|| @ship.health == 0
+      @cell_symbol = "X"
+    else
+      @cell_symbol = "M"
+    end
+
   end
 
   def fired_upon?
     @cell_has_been_fired_upon
+  end
+
+  def render(argument=false)
+    if argument == true
+      "S"
+    else
+      @cell_symbol
+    end
   end
 
 end
