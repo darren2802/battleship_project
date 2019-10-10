@@ -1,7 +1,6 @@
 require_relative './ship'
 
 class Cell
-
   attr_reader :coordinate, :ship
 
   def initialize(coordinate)
@@ -11,11 +10,7 @@ class Cell
   end
 
   def empty?
-    if @ship
-      false
-    else
-      true
-    end
+    !@ship
   end
 
   def place_ship(ship)
@@ -24,7 +19,7 @@ class Cell
 
   def fire_upon
     @cell_has_been_fired_upon = true
-    @ship.hit if @ship
+    @ship.hit if !empty?
   end
 
   def fired_upon?
@@ -32,17 +27,14 @@ class Cell
   end
 
   def render(should_reveal=false)
-    if should_reveal && @ship
-      "S"
-    elsif @cell_has_been_fired_upon && !@ship
-      "M"
-    elsif @cell_has_been_fired_upon && @ship && !@ship.sunk?
-      "H"
-    elsif @cell_has_been_fired_upon && @ship && @ship.sunk?
+    return "S" if should_reveal && !empty?
+    return "." if !fired_upon?
+    return "M" if empty?
+
+    if @ship.sunk?
       "X"
     else
-      "."
+      "H"
     end
   end
-
 end
