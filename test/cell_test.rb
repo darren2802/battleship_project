@@ -71,6 +71,7 @@ class CellTest < Minitest::Test
   end
 
   def test_check_render_argument
+    @cell_2.place_ship(@cruiser)
     assert_equal "S", @cell_2.render(true)
   end
 
@@ -97,13 +98,12 @@ class CellTest < Minitest::Test
   def test_render_after_sunk
     @cell_2.place_ship(@cruiser)
     @cell_2.fire_upon
+    # @cell_2.fire_upon
+    # @cell_2.fire_upon
     #binding.pry
-    @cell_2.fire_upon
-    #binding.pry
-    @cell_2.fire_upon
-    #binding.pry
-    # @cruiser.hit
-    # @cruiser.hit
+    @cruiser.hit
+    @cruiser.hit
+
     assert_equal "X", @cell_2.render
   end
 
