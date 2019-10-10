@@ -5,7 +5,6 @@ require_relative '../lib/cell'
 require 'pry'
 
 class CellTest < Minitest::Test
-
   def setup
     @cell = Cell.new("B4")
     @cell_1 = Cell.new("B4")
@@ -29,26 +28,25 @@ class CellTest < Minitest::Test
 
   def test_cell_empty
     assert @cell.empty?
+    @cell.place_ship(@cruiser)
+    refute @cell.empty?
   end
 
   def test_place_ship
-    cruiser = Ship.new("Cruiser", 3)
-    @cell.place_ship(cruiser)
-    assert_equal cruiser, @cell.ship
+    @cell.place_ship(@cruiser)
+    assert_equal @cruiser, @cell.ship
     refute @cell.empty?
   end
 
   # 2/3
 
   def test_ship_not_fired_upon
-    cruiser = Ship.new("Cruiser", 3)
-    @cell.place_ship(cruiser)
+    @cell.place_ship(@cruiser)
     refute @cell.fired_upon?
   end
 
   def test_ship_has_been_fired_upon_and_health
-    cruiser = Ship.new("Cruiser", 3)
-    @cell.place_ship(cruiser)
+    @cell.place_ship(@cruiser)
     @cell.fire_upon
     assert @cell.fired_upon?
     assert_equal 2, @cell.ship.health
@@ -71,6 +69,7 @@ class CellTest < Minitest::Test
   end
 
   def test_check_render_argument
+    @cell_2.place_ship(@cruiser)
     assert_equal "S", @cell_2.render(true)
   end
 
@@ -97,13 +96,8 @@ class CellTest < Minitest::Test
   def test_render_after_sunk
     @cell_2.place_ship(@cruiser)
     @cell_2.fire_upon
-    #binding.pry
     @cruiser.hit
-    #binding.pry
     @cruiser.hit
-    #binding.pry
-    # @cruiser.hit
     assert_equal "X", @cell_2.render
   end
-
 end
