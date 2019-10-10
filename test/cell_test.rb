@@ -97,9 +97,11 @@ class CellTest < Minitest::Test
   def test_render_after_sunk
     @cell_2.place_ship(@cruiser)
     @cell_2.fire_upon
+    #binding.pry
     @cell_2.fire_upon
+    #binding.pry
     @cell_2.fire_upon
-    binding.pry
+    #binding.pry
     # @cruiser.hit
     # @cruiser.hit
     assert_equal "X", @cell_2.render

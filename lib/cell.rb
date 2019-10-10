@@ -25,23 +25,27 @@ class Cell
 
   def fire_upon
     @cell_has_been_fired_upon = true
-    if @ship && @ship.sunk? == false
-      @ship.hit
-      @cell_symbol = "H"
-    elsif @ship && @ship.sunk? == true #|| @ship.health == 0
-      @cell_symbol = "X"
-    else
+
+    if @ship == nil
       @cell_symbol = "M"
+      return
     end
 
+    @ship.hit
+
+    if @ship.sunk?
+      @cell_symbol = "X"
+    else
+      @cell_symbol = "H"
+    end
   end
 
   def fired_upon?
     @cell_has_been_fired_upon
   end
 
-  def render(argument=false)
-    if argument == true
+  def render(should_reveal=false)
+    if should_reveal
       "S"
     else
       @cell_symbol
