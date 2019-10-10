@@ -98,11 +98,10 @@ class CellTest < Minitest::Test
     @cell_2.place_ship(@cruiser)
     @cell_2.fire_upon
     #binding.pry
-    @cell_2.fire_upon
+    @cruiser.hit
     #binding.pry
-    @cell_2.fire_upon
+    @cruiser.hit
     #binding.pry
-    # @cruiser.hit
     # @cruiser.hit
     assert_equal "X", @cell_2.render
   end
