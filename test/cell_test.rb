@@ -98,7 +98,6 @@ class CellTest < Minitest::Test
     @cell_2.fire_upon
     @cruiser.hit
     @cruiser.hit
-
     assert_equal "X", @cell_2.render
   end
 end
