@@ -17,11 +17,13 @@ class BoardTest < Minitest::Test
   end
 
   def test_cell_method
-    skip
-    @board.cells
-    assert_instance_of Hash, @board.cells
-    assert_equal 16, @board.cells.length
-    assert_instance_of Cell, @board.cells.keys
+    cell_hash = @board.cells
+    assert_instance_of Hash, cell_hash
+    assert_equal 16, cell_hash.length
+
+    cell_hash.each_value do |hash_value|
+      assert_instance_of Cell, hash_value
+    end
   end
 
   def test_if_coordinate_is_valid
