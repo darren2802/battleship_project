@@ -29,8 +29,11 @@ class Board
     # check length of ship equals length of coordinate array
     return false if ship.length != coordinates.length
 
-    #check coordinates valid
+    # check coordinates valid
     return false unless coordinates.all? { |coordinate| valid_coordinate?(coordinate) }
+
+    # check that no ships in these cells already (overlapping)
+    return false unless coordinates.none? { |coordinate| @cells[coordinate].ship }
 
     # get the ascii numbers of the letters of the coordinates
     coord_letters_ascii = coordinates.map { |coordinate| coordinate.slice(0,1).ord }
@@ -57,9 +60,7 @@ class Board
 
   def place(ship, coordinates)
     return false unless valid_placement?(ship, coordinates)
-
     coordinates.each { |coordinate| @cells[coordinate].place_ship(ship) }
-
   end
 
 end
