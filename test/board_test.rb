@@ -21,7 +21,7 @@ class BoardTest < Minitest::Test
   def test_cell_method
     height = 4
     width = 4
-    cell_hash = @board.cells(height, width)
+    cell_hash = @board.cells
 
     assert_instance_of Hash, cell_hash
     assert_equal (height * width), cell_hash.length
@@ -32,13 +32,11 @@ class BoardTest < Minitest::Test
   end
 
   def test_if_coordinate_is_valid
-    @board.cells
     assert @board.valid_coordinate?("A1")
     assert @board.valid_coordinate?("D4")
   end
 
   def test_if_coordinate_is_invalid
-    @board.cells
     refute @board.valid_coordinate?("A5")
     refute @board.valid_coordinate?("E1")
     refute @board.valid_coordinate?("A22")
@@ -66,6 +64,18 @@ class BoardTest < Minitest::Test
   def test_coordinates_valid
     assert @board.valid_placement?(@submarine, ["A1", "A2"])
     assert @board.valid_placement?(@cruiser, ["B1", "C1", "D1"])
+  end
+
+  def test_board_place_ship
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+    cell_1 = @board.cells["A1"]
+    cell_2 = @board.cells["A2"]
+    cell_3 = @board.cells["A3"]
+
+    assert_instance_of Ship, cell_1.ship
+    assert_instance_of Ship, cell_2.ship
+    assert_instance_of Ship, cell_3.ship
+    assert cell_3.ship == cell_2.ship
   end
 
 end

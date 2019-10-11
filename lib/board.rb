@@ -1,12 +1,16 @@
 require_relative './cell'
+require 'pry'
 
 class Board
 
+  attr_reader :cells
+
   def initialize
-    @board_cells = {}
+    @cells = {}
+    create_cells
   end
 
-  def cells(height=4, width=4)
+  def create_cells(height=4, width=4)
     cell_hash = Hash.new
     height.times do |i|
       width.times do |j|
@@ -14,17 +18,19 @@ class Board
         cell_hash[hash_key] = Cell.new(hash_key)
       end
     end
-    @board_cells = cell_hash
-    cell_hash
+    @cells = cell_hash
   end
 
   def valid_coordinate?(coordinate)
-    @board_cells.has_key?(coordinate)
+    @cells.has_key?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
     # check length of ship equals length of coordinate array
     return false if ship.length != coordinates.length
+
+    #check coordinates valid
+    return false unless coordinates.all? { |coordinate| valid_coordinate?(coordinate) }
 
     # get the ascii numbers of the letters of the coordinates
     coord_letters_ascii = coordinates.map { |coordinate| coordinate.slice(0,1).ord }
@@ -47,6 +53,13 @@ class Board
 
   def numbers_consecutive?(coord_numbers)
     coord_numbers.each_cons(2).all? { |a, b| b == a + 1 }
+  end
+
+  def place(ship, coordinates)
+    return false unless valid_placement?(ship, coordinates)
+
+    coordinates.each { |coordinate| @cells[coordinate].place_ship(ship) }
+
   end
 
 end
