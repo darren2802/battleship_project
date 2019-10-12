@@ -92,7 +92,6 @@ class BoardTest < Minitest::Test
   def test_board_render_revealed
     @board.place(@cruiser, ["A1", "A2", "A3"])
     render_expected = "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
-    binding.pry
     assert_equal render_expected, @board.render(true)
   end
 
