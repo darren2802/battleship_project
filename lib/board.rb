@@ -5,15 +5,17 @@ class Board
 
   attr_reader :cells
 
-  def initialize
+  def initialize(height = 4, width = 4)
+    @height = height
+    @width = width
     @cells = {}
     create_cells
   end
 
   def create_cells(height=4, width=4)
     cell_hash = Hash.new
-    height.times do |i|
-      width.times do |j|
+    @height.times do |i|
+      @width.times do |j|
         hash_key = (i + 65).chr + (j + 1).to_s
         cell_hash[hash_key] = Cell.new(hash_key)
       end
@@ -61,6 +63,24 @@ class Board
   def place(ship, coordinates)
     return false unless valid_placement?(ship, coordinates)
     coordinates.each { |coordinate| @cells[coordinate].place_ship(ship) }
+  end
+
+  def render(should_reveal = false)
+    render_string = "  "
+    @width.times { |i| render_string += (1 + i).to_s + " " }
+    render_string += "\n"
+
+    @height.times do |i|
+      row_letter = (i + 65).chr
+      render_string += row_letter + " "
+      @width.times do |j|
+        coordinate = row_letter + (j + 1).to_s
+        render_string += @cells[coordinate].render(should_reveal) + " "
+      end
+      render_string += "\n"
+    end
+
+    render_string
   end
 
 end
