@@ -40,7 +40,7 @@ class Board
     # get the ascii numbers of the letters of the coordinates
     coord_letters_ascii = coordinates.map { |coordinate| coordinate.slice(0,1).ord }
     # get the numbers of the coordinates
-    coord_numbers = coordinates.map { |coordinate| coordinate.slice(1,1).ord }
+    coord_numbers = coordinates.map { |coordinate| coordinate.slice(1,1).to_i }
 
     # test if valid row (letters the same and numbers consecutive)
     return true if numbers_equal?(coord_letters_ascii) && numbers_consecutive?(coord_numbers)

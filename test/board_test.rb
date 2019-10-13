@@ -19,8 +19,8 @@ class BoardTest < Minitest::Test
   end
 
   def test_cell_method
-    height = 9
-    width = 9
+    height = 4
+    width = 4
     cell_hash = @board.cells
 
     assert_instance_of Hash, cell_hash
