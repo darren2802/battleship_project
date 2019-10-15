@@ -18,8 +18,9 @@ class Cell
   end
 
   def fire_upon
+    require "pry"; binding.pry
+    @ship.hit if !empty? && !@cell_has_been_fired_upon
     @cell_has_been_fired_upon = true
-    @ship.hit if !empty?
   end
 
   def fired_upon?

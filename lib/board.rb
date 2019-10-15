@@ -1,5 +1,4 @@
 require_relative './cell'
-require 'pry'
 
 class Board
 
