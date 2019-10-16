@@ -3,7 +3,7 @@ require 'pry'
 
 class Board
 
-  attr_reader :cells
+  attr_reader :cells, :height, :width
 
   def initialize(height = 4, width = 4)
     @height = height
