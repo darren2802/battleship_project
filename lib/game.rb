@@ -107,4 +107,25 @@ class Game
     random_cell
   end
 
+  def all_sunk?
+    result = nil
+    user_ships_all =  @user_ships.all? { |ship| ship.sunk? }
+    computer_ships_all =  @computer_ships.all? { |ship| ship.sunk? }
+
+    if user_ships_all
+      result = 'I win!'
+    elsif computer_ships_all
+      result = 'You win!'
+    else
+      false
+    end
+  end
+
+  def render_boards(show_computer_ships = false)
+    puts "=============COMPUTER BOARD============="
+    puts computer_board.render(show_computer_ships)
+    puts "==============PLAYER BOARD=============="
+    puts user_board.render(true)
+  end
+
 end
