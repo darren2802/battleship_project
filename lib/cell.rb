@@ -27,7 +27,12 @@ class Cell
   end
 
   def render(should_reveal=false)
+    return "H" if should_reveal && fired_upon? && !empty? && !@ship.sunk?
+    require 'pry'; binding.pry
+    
+    return "X" if should_reveal && @ship.sunk?
     return "S" if should_reveal && !empty?
+
     return "." if !fired_upon?
     return "M" if empty?
 

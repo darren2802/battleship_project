@@ -17,6 +17,14 @@ loop do
 
   puts ""
 
+  user_size = 0
+  print 'Please enter the size of the board (any number from 4 to 9): '
+  loop do
+    user_size = gets.chomp.to_i
+    break if user_size >= 4 && user_size <= 9
+    print 'Invalid input, please try again: '
+  end
+
   computer_ships = []
   computer_ship1 = Ship.new("Cruiser", 3)
   computer_ship2 = Ship.new("Submarine", 2)
@@ -29,8 +37,8 @@ loop do
   user_ships << user_ship1
   user_ships << user_ship2
 
-  computer_board = Board.new
-  user_board = Board.new
+  computer_board = Board.new(user_size, user_size)
+  user_board = Board.new(user_size, user_size)
 
   new_game = Game.new(computer_ships, user_ships, computer_board, user_board)
   new_game.place_ships(computer_board, computer_ships, [])
@@ -87,6 +95,7 @@ loop do
 
     # render the boards
     new_game.render_boards
+    puts ''
 
     # user takes their turn
     user_coordinates = ' '
@@ -130,7 +139,7 @@ loop do
     break if result
 
   end
-  puts result
-  puts 'Final Board'
+  puts result + '\n\n'
+  puts 'Final Board\n\n'
   new_game.render_boards(true)
 end
