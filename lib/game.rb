@@ -14,6 +14,9 @@ class Game
     @user_ships = user_ships
     @computer_board = computer_board
     @user_board = user_board
+    @computer_hits = Hash.new
+    @computer_seek_new_enemy_ship = true
+    @number_enemy_ships_found = 0
   end
 
 
@@ -98,12 +101,65 @@ class Game
   end
 
   def computer_fires_shot
+    shot_result = ''
+    coord = ''
+    hash_key = "enemy_ship_#{@number_enemy_ships_found}"
+    if @computer_seek_new_enemy_ship
+      random_cell = ''
+      loop do
+        random_cell = @user_board.cells.keys.sample
+        break if !@user_board.cells[random_cell].fired_upon?
+      end
+      @user_board.cells[random_cell].fire_upon
+      shot_result = @user_board.cells[random_cell].render(true)
+      coord = random_cell
+      random_cell
+    else
+      reference_coord = @computer_hits[hash_key][:coords].last
+      target_cell = adjacent_target_cell(reference_coord)
+      @user_board.cells[target_cell].fire_upon
+      shot_result = @user_board.cells[target_cell].render(true)
+      coord = target_cell
+    end
+
+    hash_key = ''
+    if shot_result == 'H'
+      # do this if this the first hit on the user ship
+      if @computer_seek_new_enemy_ship
+        @number_enemy_ships_found += 1
+        hash_key = "enemy_ship_#{@number_enemy_ships_found}"
+        @computer_hits[hash_key] = Hash.new
+        @computer_hits[hash_key][:is_sunk] = false
+        @computer_hits[hash_key][:coords] = [coord]
+      # do this if this is a subsequent hit on the user ship
+      else      
+        hash_key = "enemy_ship_#{@number_enemy_ships_found}"
+        @computer_hits[hash_key][:coords] << coord
+      end
+      @computer_seek_new_enemy_ship = false
+    elsif shot_result == 'X'
+      @computer_seek_new_enemy_ship = true
+      #@computer_hits[hash_key][:is_sunk] = true
+    end
+
+    coord
+  end
+
+  def adjacent_target_cell(reference_coord)
+    reference_coord_letter = reference_coord.slice(0,1)
+    reference_coord_letter_ascii = reference_coord_letter.ord
+    reference_coord_number = reference_coord.slice(1,1).to_i
+    adjacent_cells = []
+    adjacent_cells << (reference_coord_letter_ascii - 1).chr + reference_coord_number.to_s
+    adjacent_cells << reference_coord_letter + (reference_coord_number + 1).to_s
+    adjacent_cells << (reference_coord_letter_ascii + 1).chr + reference_coord_number.to_s
+    adjacent_cells << reference_coord_letter + (reference_coord_number - 1).to_s
+    adjacent_cells_valid = adjacent_cells.find_all { |adjacent_cell| @user_board.valid_coordinate?(adjacent_cell) }
     random_cell = ''
     loop do
-      random_cell = @user_board.cells.keys.sample
+      random_cell = adjacent_cells_valid.sample
       break if !@user_board.cells[random_cell].fired_upon?
     end
-    @user_board.cells[random_cell].fire_upon
     random_cell
   end
 
