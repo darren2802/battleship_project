@@ -47,15 +47,15 @@ loop do
   user_coordinates = ''
 
   # for testing
-  user_coordinates = ['A4', 'B4', 'C4']
+  # user_coordinates = ['A4', 'B4', 'C4']
 
-    # loop do
-    #   user_input = gets.chomp.upcase
-    #   puts ""
-    #   user_coordinates = user_input.split
-    #   break if user_board.valid_placement?(user_ship1, user_coordinates)
-    #   print "Invalid coordinates, please try again: "
-    # end
+    loop do
+      user_input = gets.chomp.upcase
+      puts ""
+      user_coordinates = user_input.split( /, */ )
+      break if user_board.valid_placement?(user_ship1, user_coordinates)
+      print "Invalid coordinates, please try again: "
+    end
 
   puts ""
   new_game.place_ships(user_board, [user_ship1], user_coordinates, false)
@@ -66,15 +66,15 @@ loop do
   print "Enter the squares for the Submarine (2 spaces): "
   user_coordinates = ''
 
-  user_coordinates = ['D1', 'D2']
+  # user_coordinates = ['D1', 'D2']
 
-    # loop do
-    #   user_input = gets.chomp.upcase
-    #   puts ""
-    #   user_coordinates = user_input.split
-    #   break if user_board.valid_placement?(user_ship2, user_coordinates)
-    #   print "Invalid coordinates, please try again: "
-    # end
+    loop do
+      user_input = gets.chomp.upcase
+      puts ""
+      user_coordinates = user_input.split( /, */ )
+      break if user_board.valid_placement?(user_ship2, user_coordinates)
+      print "Invalid coordinates, please try again: "
+    end
 
   puts ""
   new_game.place_ships(user_board, [user_ship2], user_coordinates, false)
