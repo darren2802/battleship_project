@@ -17,6 +17,7 @@ class Game
     @computer_hits = Hash.new
     @computer_seek_new_enemy_ship = true
     @number_enemy_ships_found = 0
+    @counter = 0
   end
 
 
@@ -132,7 +133,7 @@ class Game
         @computer_hits[hash_key][:is_sunk] = false
         @computer_hits[hash_key][:coords] = [coord]
       # do this if this is a subsequent hit on the user ship
-      else      
+      else
         hash_key = "enemy_ship_#{@number_enemy_ships_found}"
         @computer_hits[hash_key][:coords] << coord
       end
@@ -158,7 +159,12 @@ class Game
     random_cell = ''
     loop do
       random_cell = adjacent_cells_valid.sample
+      @counter += 1
       break if !@user_board.cells[random_cell].fired_upon?
+      if @counter > 5
+        @computer_seek_new_enemy_ship = true
+        break
+      end
     end
     random_cell
   end
