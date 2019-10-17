@@ -32,7 +32,6 @@ class Cell
       return "X" if @ship.sunk?
     end
 
-    #return "X" if should_reveal && @ship.sunk?
     return "S" if should_reveal && !empty?
 
     return "." if !fired_upon?

@@ -17,11 +17,19 @@ loop do
 
   puts ""
 
-  user_size = 0
-  print 'Please enter the size of the board (any number from 4 to 9): '
+  user_height = 0
+  print 'Please enter the height of the board (any number from 4 to 10): '
   loop do
-    user_size = gets.chomp.to_i
-    break if user_size >= 4 && user_size <= 9
+    user_height = gets.chomp.to_i
+    break if user_height >= 4 && user_height <= 10
+    print 'Invalid input, please try again: '
+  end
+
+  user_width = 0
+  print 'Please enter the width of the board (any number from 4 to 10): '
+  loop do
+    user_width = gets.chomp.to_i
+    break if user_width >= 4 && user_width <= 10
     print 'Invalid input, please try again: '
   end
 
@@ -37,8 +45,8 @@ loop do
   user_ships << user_ship1
   user_ships << user_ship2
 
-  computer_board = Board.new(user_size, user_size)
-  user_board = Board.new(user_size, user_size)
+  computer_board = Board.new(user_height, user_width)
+  user_board = Board.new(user_height, user_width)
 
   new_game = Game.new(computer_ships, user_ships, computer_board, user_board)
   new_game.place_ships(computer_board, computer_ships, [])
