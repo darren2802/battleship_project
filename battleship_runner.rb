@@ -139,7 +139,9 @@ loop do
     break if result
 
   end
-  puts result + '\n\n'
-  puts 'Final Board\n\n'
+  puts result
+  puts ""
+  puts 'Final Board:'
+  puts ""
   new_game.render_boards(true)
 end
