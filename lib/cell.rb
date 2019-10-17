@@ -27,6 +27,8 @@ class Cell
   end
 
   def render(should_reveal=false)
+    return "X" if should_reveal && fired_upon? && !empty? && @ship.sunk?
+    return "H" if should_reveal && fired_upon? && !empty?
     return "S" if should_reveal && !empty?
     return "." if !fired_upon?
     return "M" if empty?
