@@ -40,8 +40,8 @@ loop do
   computer_text += "The Cruiser is three units long and the Submarine is two units long.\n"
   puts computer_text
   puts ""
-  puts computer_board.render(true)
-  puts ""
+  puts computer_board.render #I changed this to render a regular board since it
+  puts ""                    #gave away where the computer put their ships
 
   print "Enter the squares for the Cruiser (3 spaces): "
   user_coordinates = ''
@@ -52,7 +52,7 @@ loop do
     loop do
       user_input = gets.chomp.upcase
       puts ""
-      user_coordinates = user_input.split( /, */ )
+      user_coordinates = user_input.split(/[,\s]+/)
       break if user_board.valid_placement?(user_ship1, user_coordinates)
       print "Invalid coordinates, please try again: "
     end
@@ -71,7 +71,7 @@ loop do
     loop do
       user_input = gets.chomp.upcase
       puts ""
-      user_coordinates = user_input.split( /, */ )
+      user_coordinates = user_input.split(/[,\s]+/)
       break if user_board.valid_placement?(user_ship2, user_coordinates)
       print "Invalid coordinates, please try again: "
     end
